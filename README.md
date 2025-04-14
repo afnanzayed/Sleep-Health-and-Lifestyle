@@ -62,16 +62,39 @@ Each entry contains lifestyle, health, and activity metrics:
 
 ---
 
-## 📊 Model Comparison
+## 🧠 Model Building
 
-| Model                    | Train Accuracy | Test Accuracy |
-|-------------------------|----------------|---------------|
-| Logistic Regression     | 89.00%         | 94.00%        |
-| Random Forest           | 96.00%         | 95.00%        |
-| Support Vector Classifier | 94.00%       | 95.00%        |
-| **XGBoost (Tuned)**     | 91.64%         | **96.00%** ✅ |
+To identify the most effective classifier for sleep disorder prediction, I tested a variety of models — from simple baselines to advanced ensemble techniques.  
+Each model was trained and evaluated using the same pipeline to ensure a fair comparison.
+
+📦 Models used:
+
+- Logistic Regression  
+- Decision Tree Classifier  
+- Random Forest Classifier  
+- Support Vector Classifier (SVC)  
+- K-Nearest Neighbors (KNN)  
+- Gradient Boosting Classifier  
+- XGBoost (Tuned with GridSearchCV)
+
+> ✅ **XGBoost (tuned)** achieved the highest test accuracy: **96%**
+
+And yes... I made them *all* compete 😅
 
 ---
+
+### 📊 Model Performance Comparison
+
+| Model                          | Train Accuracy | Test Accuracy |
+|-------------------------------|----------------|---------------|
+| Logistic Regression           | 89.00%         | 94.00%        |
+| Decision Tree Classifier      | 98.17%         | 92.33%        |
+| Random Forest Classifier      | 99.33%         | 94.66%        |
+| Support Vector Classifier     | 92.61%         | 85.66%        |
+| K-Nearest Neighbors (KNN)     | 89.70%         | 84.33%        |
+| Gradient Boosting Classifier  | 97.93%         | 92.00%        |
+| **XGBoost (Tuned)**           | 91.64%         | **96.00%** ✅ |
+
 
 ## 🔍 Key Insights
 

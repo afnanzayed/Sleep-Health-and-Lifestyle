@@ -1,0 +1,86 @@
+((= IPython input/output style =))
+
+((*- extends 'base.tex.j2' -*))
+
+% Custom definitions
+((* block definitions *))
+    ((( super() )))
+
+    % Pygments definitions
+    ((( resources.latex.pygments_definitions )))
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+((* endblock definitions *))
+
+%===============================================================================
+% Input
+%===============================================================================
+
+((* block input scoped *))
+    ((( add_prompt(cell.source | highlight_code(strip_verbatim=True), cell, 'In ', 'incolor', cell.metadata.hideCode) )))
+((* endblock input *))
+
+
+%=============================================================================== 
+% Output
+%===============================================================================
+
+((* block execute_result scoped *))
+    ((*- for type in output.data | filter_data_type -*))
+        ((*- if type in ['text/plain'] -*))
+            ((( add_prompt(output.data['text/plain'] | escape_latex, cell, 'Out', 'outcolor', cell.metadata.hideOutput) )))
+        ((*- else -*))
+            ((*- if cell.metadata.hidePrompt -*))
+\texttt{\color{outcolor}Out[{\color{outcolor}((( cell.execution_count )))}]:}
+            ((*- endif -*))
+            ((*- if cell.metadata.hideOutput -*))
+((( super() )))
+            ((*- endif -*))
+        ((*- endif -*))
+    ((*- endfor -*))
+((* endblock execute_result *))
+
+((* block stream *))
+((*- if cell.metadata.hideOutput -*))
+((*- else -*))
+    ((( super() )))
+((*- endif -*))
+((* endblock stream *))
+
+((* block error *))
+((*- if cell.metadata.hideOutput -*))
+((*- else -*))
+    ((( super() )))
+((*- endif -*))
+((* endblock error *))
+
+%==============================================================================
+% Support Macros
+%==============================================================================
+
+% Name: add_prompt
+% Purpose: Renders an output/input prompt
+((* macro add_prompt(text, cell, prompt, prompt_color, hide_contents=False) -*))
+    ((*- if cell.execution_count is defined -*))
+        ((*- set execution_count = "" ~ (cell.execution_count | replace(None, " ")) -*))
+    ((*- else -*))
+        ((*- set execution_count = " " -*))
+    ((*- endif -*))
+    ((*- set indention =  " " * (execution_count | length + 7) -*))
+    ((*- if hide_contents -*))
+        ((*- set text = "" -*))
+    ((*- endif -*))
+
+((*- if cell.metadata.hidePrompt -*))
+\begin{Verbatim}[commandchars=\\\{\}]
+((( text )))
+\end{Verbatim}
+((*- else -*))
+\begin{Verbatim}[commandchars=\\\{\}]
+((( text | add_prompts(first='{\color{' ~ prompt_color ~ '}' ~ prompt ~ '[{\\color{' ~ prompt_color ~ '}' ~ execution_count ~ '}]:} ', cont=indention) )))
+\end{Verbatim}
+((*- endif -*))
+((*- endmacro *))

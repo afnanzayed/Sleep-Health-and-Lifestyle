@@ -1,0 +1,7 @@
+[nbconvert.exporters]
+hide_code_html=hide_code:HideCodeHTMLExporter
+hide_code_latex=hide_code:HideCodeLatexExporter
+hide_code_latexpdf=hide_code:HideCodeLatexPDFExporter
+hide_code_pdf=hide_code:HideCodePDFExporter
+hide_code_slides=hide_code:HideCodeSlidesExporter
+
